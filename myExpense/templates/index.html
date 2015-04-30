@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-3.3.4-dist/css/bootstrap-theme.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-3.3.4-dist/css/bootstrap.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='myExpense.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-3.3.4-dist/js/bootstrap.js') }}"></script>
+
+    <title>My Expense</title>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">View Report <span class="sr-only">(current)</span></a></li>
+        <li data-target="#addExpensePopup" data-toggle="modal"><a href="#">Add Expense</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="addExpensePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Expense</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+         <div class="form-group">
+            <label for="expense">Expense</label>
+            <button type="button" class="btn btn-plus">+</button>
+            <button type="button" class="btn btn-minus active">-</button>
+            <input type="number" pattern="^\d+(\.|\,)\d{2}$" class="form-control" id="expense" placeholder="Amount">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Description">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+<h1 class="text-center">How am I spending so much money!?</h1>
+<p class="text-left"> Track your money sending without any bank information. It is simple and easy to use. Just add your expense as you spend. </p>
+</div>
+</body>
+
+</html>

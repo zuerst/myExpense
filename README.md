@@ -1,4 +1,9 @@
-This is project for tracking personal expense and income.
+# Project: My Expense
 
-We are going to be using Python-2.7.6
-Using python framework Flask-0.10.
+The goal of this project is to create and light weight and simple web app to track and view personal expense and income.
+
+---
+## Development tools
+- Using Virtualenv to control python environment.
+- Python-2.7.6
+- Framework: Flask-0.10.

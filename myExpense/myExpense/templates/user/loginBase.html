@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="eng">
+
+    <head>
+        <meta charset="utf-8">
+        {% include 'headerCSS.html' %}
+        
+    </head>
+
+    <body>
+        
+        {% block sidebar %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

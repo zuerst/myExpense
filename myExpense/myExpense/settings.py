@@ -79,8 +79,8 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'myExpense',
-            'USER': 'root',
-            'PASSWORD': 'khskhs4805',
+            'USER': 'myExpense',
+            'PASSWORD': '20150501Expense',
             'TEST_MIRROR': 'default'
         }
     }

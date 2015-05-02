@@ -13,7 +13,12 @@ from forms import RegistrationForm
 from models import *
 
 
-
+def test(request):
+	u = User.objects.get(id = 1)
+	c = Category.objects.get(mainCategory = 'Drink')
+	t = Transaction(title = 'test title', description = 'test description', transType = 'Debit', amount = 100, date = '2015-05-01', category = c, user = u)
+	t.save()
+	return render_to_response('login.html')
 
 def login(request):
     c = {}

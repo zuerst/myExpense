@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
+#from django.conf import settings
 
 
 # Table for Category of expense.
@@ -20,8 +21,9 @@ class Transaction(models.Model):
     transType = models.CharField('Transaction Type', max_length=100, choices=TRANSACTION_TYPES, null=False)
     amount = models.FloatField(null=False)
     date = models.DateField('Transaction Date', null=False)
-    category = models.ForeignKey(Category)
+    #category = models.ForeignKey(Category)
     user = models.ForeignKey(User)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False)
 
     class Meta:
         ordering = ['date']

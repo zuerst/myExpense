@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
+from django.template import Context, loader, RequestContext
 
 from forms import RegistrationForm
 from models import *
@@ -26,19 +27,40 @@ def mainPage(request):
 def profilePage(request):
     return render_to_response('profile/profileMain.html')
 
-# Rendering main page of '/profile' after successful login.
+# Rendering main page of '/account' after successful login.
 def accountPage(request):
     return render_to_response('profile/account.html')
 
-# Rendering main page of '/profile' after successful login.
+# Rendering main page of '/add-expense' after successful login.
 def addExpensePage(request):
-    return render_to_response('profile/addExpense.html')
+    c = {}
+    c.update(csrf(request))
+    context = Context({'transactionForm': TransactionForm})
+    return render_to_response('profile/addExpense.html', c, context)
 
-# Rendering main page of '/profile' after successful login.
+# Helper function for addExpensePage.
+# Add expense when button is clicked.
+def addExpense(request):
+    if request.method == 'POST':
+        print request.POST
+        title = request.POST['title']
+        description = request.POST['description']
+        transType = request.POST['transType']
+        amount = request.POST['amount']
+        date = request.POST['date']
+        category = request.POST['category']
+        user = request.user
+        print user
+        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category = category, user = user)
+        transaction.save()
+
+    return HttpResponseRedirect('/add-expense')
+
+# Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):
     return render_to_response('profile/manageCategory.html')
 
-# Rendering main page of '/profile' after successful login.
+# Rendering main page of '/report' after successful login.
 def reportPage(request):
     return render_to_response('profile/report.html')
 
@@ -113,3 +135,15 @@ def test(request):
     t = Transaction(title='test title', description='test description', transType='Debit', amount=100, date='2015-05-01', category=c, user=u)
     t.save()
     return render_to_response('login.html')
+
+def test2(request):
+    user = User(id=1, username="admin", is_active=True,
+                is_superuser=True, is_staff=True,
+                last_login="2011-09-01T13:20:30+03:00",
+                email="email@gmail.com",
+                date_joined="2011-09-01T13:20:30+03:00")
+    user.set_password('admin')
+    user.save()
+    category = Category(mainCategory = "Drink", subCategory = "Coffee")
+    category.save()
+    return render_to_response('profile/profileMain.html')

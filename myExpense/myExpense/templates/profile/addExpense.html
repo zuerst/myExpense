@@ -3,4 +3,16 @@
 
 
 {% block content %}
+<div id="page-wrapper">
+	<form action="/addingExpense/" method="POST">
+		<div>
+            {% csrf_token %}
+            {{ transactionForm.as_p }}
+        </div>
+		<button type="submit" value="Add Expense">
+			Add Expense
+		</button>
+	</form>
+</div>
+
 {% endblock %}

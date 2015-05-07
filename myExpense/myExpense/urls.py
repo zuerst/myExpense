@@ -24,12 +24,20 @@ urlpatterns = [
     url(r'^$', 'myExpense.views.mainPage'),
 
     # Main profile page (Successful login)
+<<<<<<< HEAD
     url(r'^profile/$', 'myExpense.views.profilePage'),
     url(r'^account/$', 'myExpense.views.accountPage'),
     url(r'^add-expense/$', 'myExpense.views.addExpensePage'),
     url(r'^addingExpense/$', 'myExpense.views.addExpense'),
     url(r'^manage-category/$', 'myExpense.views.manageCategoryPage'),
     url(r'^report/$', 'myExpense.views.reportPage'),
+=======
+    url(r'^profile$', 'myExpense.views.profilePage'),
+    url(r'^profile/account$', 'myExpense.views.accountPage'),
+    url(r'^profile/add-expense$', 'myExpense.views.addExpensePage'),
+    url(r'^profile/manage-category$', 'myExpense.views.manageCategoryPage'),
+    url(r'^profile/report$', 'myExpense.views.reportPage'),
+>>>>>>> 0cd9107a994cb869071505e4e750591699731e17
 
     # URL for Login and Register User.
     url(r'^accounts/login/$', 'myExpense.views.login'),

@@ -25,18 +25,25 @@ def mainPage(request):
 
 # Rendering main page of '/profile' after successful login.
 def profilePage(request):
-    return render_to_response('profile/profileMain.html')
+    return render_to_response('profile/profileMain.html', {'template': 'Main Page'})
+
 
 # Rendering main page of '/account' after successful login.
 def accountPage(request):
-    return render_to_response('profile/account.html')
+    return render_to_response('profile/account.html', {'template': 'accont Page'})
+
 
 # Rendering main page of '/add-expense' after successful login.
 def addExpensePage(request):
+<<<<<<< HEAD
     c = {}
     c.update(csrf(request))
     context = Context({'transactionForm': TransactionForm})
     return render_to_response('profile/addExpense.html', c, context)
+=======
+    return render_to_response('profile/addExpense.html', {'template': 'add Expense'})
+
+>>>>>>> 0cd9107a994cb869071505e4e750591699731e17
 
 # Helper function for addExpensePage.
 # Add expense when button is clicked.
@@ -58,11 +65,12 @@ def addExpense(request):
 
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):
-    return render_to_response('profile/manageCategory.html')
+    return render_to_response('profile/manageCategory.html', {'template': 'Category Page'})
+
 
 # Rendering main page of '/report' after successful login.
 def reportPage(request):
-    return render_to_response('profile/report.html')
+    return render_to_response('profile/report.html', {'template': 'report Page'})
 
 
 ############################
@@ -71,20 +79,25 @@ def reportPage(request):
 
 
 def login(request):
-    c = {}
-    c.update(csrf(request))
-    return render_to_response('user/login.html', c)
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/profile')
+    else:
+        c = {}
+        c.update(csrf(request))
+        c.update({'nextURL': request.GET.get('next', '/profile')})
+        return render_to_response('profile/profileLogin.html', c)
 
 
 def auth_view(request):
     # GET username, if there is no valid data, return ''.
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    user = auth.authenticate(username = username, password = password)
+    nextURL = request.POST.get('next', '/profile')
+    user = auth.authenticate(username=username, password=password)
 
     if user is not None:
         auth.login(request, user)
-        return HttpResponseRedirect('/accounts/loggedin')
+        return HttpResponseRedirect(nextURL)
     else:
         return HttpResponseRedirect('/accounts/invalid_login')
 
@@ -93,17 +106,16 @@ def loggedin(request):
     c = {}
     c.update(csrf(request))
     c['username'] = request.user.username
-    test = request.POST.get('title', '')
     return HttpResponseRedirect('/profile')
 
 
 def invalid_login(request):
-    return render_to_response('user/invalid_login.html')
+    return render_to_response('accounts/invalid_login.html')
 
 
 def logout(request):
     auth.logout(request)
-    return render_to_response('user/logout.html')
+    return render_to_response('accounts/logout.html')
 
 
 def register_user(request):
@@ -113,15 +125,15 @@ def register_user(request):
             form.save()
             return HttpResponseRedirect('/accounts/register_success')
         else:
-            return render_to_response('user/register.html', {'form': form})
+            return render_to_response('accounts/register.html', {'form': form})
     args = {}
     args.update(csrf(request))
     args['form'] = RegistrationForm()
-    return render(request, 'user/register.html', args)
+    return render(request, 'accounts/register.html', args)
 
 
 def register_success(request):
-    return render_to_response('user/register_success.html')
+    return render_to_response('accounts/register_success.html')
 
 
 ################################################

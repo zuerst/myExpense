@@ -49,6 +49,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    # Middleware to make sure some pages require login.
+    'myExpense.loginRequired.RequireLoginMiddleware',
 )
 
 ROOT_URLCONF = 'myExpense.urls'
@@ -68,6 +70,14 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REQUIRED_URLS = (
+    r'/profile/?(.*)$',
+)
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+
+)
 
 WSGI_APPLICATION = 'myExpense.wsgi.application'
 

@@ -11,8 +11,8 @@
     <meta name="author" content="">
     {% include 'headerCSS.html' %}
     <!-- Custom CSS -->
-    <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
-    <script type="text/javascript" src="{% static 'dist/js/sb-admin-2.js' %}"></script>
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/sb-admin-2.js' %}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,8 +34,13 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                 </button>
-                <a class="navbar-brand" href="profile">MyExpense</a>
+                <a class="navbar-brand" href="/profile">MyExpense</a>
             </div>
+                <ul class="nav navbar-nav navbar-right navbar-top-links">
+                    <li>
+                        <a href="/accounts/logout">Logout</a>
+                    </li>
+                </ul>
             <!-- /.navbar-header -->   
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">

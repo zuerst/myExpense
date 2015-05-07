@@ -7,11 +7,9 @@ from django.forms import ModelForm
 
 # Table for Category of expense.
 class Category(models.Model):
+    catNum = models.AutoField('Category Num', max_length=8, primary_key=True, default = 1)
     mainCategory = models.CharField('Main Category', max_length=100, null=False)
     subCategory = models.CharField('Sub Category', max_length=100, null=False)
-
-cat = Category(mainCategory = "Drink", subCategory = "Coffee")
-cat.save()
 
 # Table for Transactions
 class Transaction(models.Model):
@@ -24,8 +22,8 @@ class Transaction(models.Model):
     transType = models.CharField('Transaction Type', max_length=100, choices=TRANSACTION_TYPES, null=False)
     amount = models.FloatField(null=False)
     date = models.DateField('Transaction Date', null=False)
-    category = models.ForeignKey(Category)
-    user = models.ForeignKey(User)
+    category = models.ForeignKey(Category, primary_key = False, null=True, default = 1)
+    user = models.ForeignKey(User, primary_key = False, null=True, default = 1)
     #user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False)
 
     class Meta:

@@ -2,7 +2,14 @@
 
 {% block content %}
 <div id="page-wrapper">
-<<<<<<< HEAD
+
+    <div class="row">
+        <div class="col-lg-12">
+                <h1 class="page-header">Welcome! {{ template }}</h1>
+        </div>
+                <!-- /.col-lg-12 -->
+    </div>
+
 	<form action="/addingExpense/" method="POST">
 		<div>
             {% csrf_token %}
@@ -14,13 +21,5 @@
 	</form>
 </div>
 
-=======
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Welcome! {{ template }}</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-</div>
->>>>>>> 0cd9107a994cb869071505e4e750591699731e17
+            
 {% endblock %}

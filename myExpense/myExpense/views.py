@@ -35,15 +35,11 @@ def accountPage(request):
 
 # Rendering main page of '/add-expense' after successful login.
 def addExpensePage(request):
-<<<<<<< HEAD
     c = {}
     c.update(csrf(request))
-    context = Context({'transactionForm': TransactionForm})
+    context = Context({'transactionForm': TransactionForm}, {'template': 'add Expense'})
     return render_to_response('profile/addExpense.html', c, context)
-=======
-    return render_to_response('profile/addExpense.html', {'template': 'add Expense'})
 
->>>>>>> 0cd9107a994cb869071505e4e750591699731e17
 
 # Helper function for addExpensePage.
 # Add expense when button is clicked.

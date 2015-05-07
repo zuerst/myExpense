@@ -21,8 +21,64 @@
 
 </head>
 
-    <body>
-        
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="profile">MyExpense</a>
+            </div>
+            <!-- /.navbar-header -->   
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        
+                        <li>
+                            <a href="profile"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="account"><i class="fa fa-wrench fa-fw"></i> Account</a>
+                    
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="add-expense"><i class="fa fa-edit fa-fw"></i> Add Expense</a>
+                        </li>
+                        <li>
+                            <a href="manage-category"><i class="fa fa-table fa-fw"></i> Manage Category</a>
+                        </li>
+                        <li>
+                            <a href="report"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
+                            
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> What should I be</a>
+                            
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> What Should I be</a>
+                        
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+    </div>
+    <!-- /#wrapper -->
+
+
+  
         {% block sidebar %}
         {% endblock %}
 

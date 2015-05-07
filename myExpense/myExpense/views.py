@@ -26,6 +26,22 @@ def mainPage(request):
 def profilePage(request):
     return render_to_response('profile/profileMain.html')
 
+# Rendering main page of '/profile' after successful login.
+def accountPage(request):
+    return render_to_response('profile/account.html')
+
+# Rendering main page of '/profile' after successful login.
+def addExpensePage(request):
+    return render_to_response('profile/addExpense.html')
+
+# Rendering main page of '/profile' after successful login.
+def manageCategoryPage(request):
+    return render_to_response('profile/manageCategory.html')
+
+# Rendering main page of '/profile' after successful login.
+def reportPage(request):
+    return render_to_response('profile/report.html')
+
 
 ############################
 # Login and Register

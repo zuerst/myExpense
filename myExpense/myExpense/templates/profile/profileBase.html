@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    {% include 'headerCSS.html' %}    
+    {% include 'headerCSS.html' %}
+    <!-- Custom CSS -->
+    <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'dist/js/sb-admin-2.js' %}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,21 +42,21 @@
                     <ul class="nav" id="side-menu">
                         
                         <li>
-                            <a href="profile"><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                            <a href="/profile"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="account"><i class="fa fa-wrench fa-fw"></i> Account</a>
+                            <a href="/profile/account"><i class="fa fa-wrench fa-fw"></i> Account</a>
                     
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="add-expense"><i class="fa fa-edit fa-fw"></i> Add Expense</a>
+                            <a href="/profile/add-expense"><i class="fa fa-edit fa-fw"></i> Add Expense</a>
                         </li>
                         <li>
-                            <a href="manage-category"><i class="fa fa-table fa-fw"></i> Manage Category</a>
+                            <a href="/profile/manage-category"><i class="fa fa-table fa-fw"></i> Manage Category</a>
                         </li>
                         <li>
-                            <a href="report"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
+                            <a href="/profile/report"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
                             
                             <!-- /.nav-second-level -->
                         </li>

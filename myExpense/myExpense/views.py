@@ -51,13 +51,18 @@ def addExpense(request):
         transType = request.POST['transType']
         amount = request.POST['amount']
         date = request.POST['date']
-        category = request.POST['category']
-        user = request.user
-        print user
-        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category = category, user = user)
+        catNum = request.POST.get('category', 1)
+        # print catNum
+        userID = request.user.id
+        # print userID
+        category = Category.objects.get(catNum = catNum)
+        print category
+        user = User.objects.get(id = userID)
+        # print user
+        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category_id = category, user_id = user)
         transaction.save()
 
-    return HttpResponseRedirect('/add-expense')
+    return HttpResponseRedirect('/profile/add-expense')
 
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):

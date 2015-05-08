@@ -13,6 +13,7 @@ class Category(models.Model):
 
 # Table for Transactions
 class Transaction(models.Model):
+    transID = models.AutoField('Transaction ID', max_length=8, primary_key=True, default = 1)
     TRANSACTION_TYPES = (
         ('Debit', 'Debit'),
         ('Credit', 'Credit'),
@@ -22,8 +23,8 @@ class Transaction(models.Model):
     transType = models.CharField('Transaction Type', max_length=100, choices=TRANSACTION_TYPES, null=False)
     amount = models.FloatField(null=False)
     date = models.DateField('Transaction Date', null=False)
-    category = models.ForeignKey(Category, primary_key = False, null=True, default = 1)
-    user = models.ForeignKey(User, primary_key = False, null=True, default = 1)
+    category_id = models.ForeignKey(Category, default=1)
+    user_id = models.ForeignKey(User, default=1)
     #user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False)
 
     class Meta:
@@ -37,4 +38,4 @@ class Transaction(models.Model):
 class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
-        fields = ['title', 'description', 'transType', 'amount', 'date', 'category']
+        fields = ['title', 'description', 'transType', 'amount', 'date', 'category_id']

@@ -10,7 +10,7 @@
                 <!-- /.col-lg-12 -->
     </div>
 
-	<form action="/addingExpense/" method="POST">
+	<form action="/profile/addingExpense" method="POST">
 		<div>
             {% csrf_token %}
             {{ transactionForm.as_p }}

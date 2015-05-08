@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^profile$', 'myExpense.views.profilePage'),
     url(r'^profile/account$', 'myExpense.views.accountPage'),
     url(r'^profile/add-expense$', 'myExpense.views.addExpensePage'),
+    url(r'^profile/addingExpense$', 'myExpense.views.addExpense'),
     url(r'^profile/manage-category$', 'myExpense.views.manageCategoryPage'),
     url(r'^profile/report$', 'myExpense.views.reportPage'),
 

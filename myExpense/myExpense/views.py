@@ -70,6 +70,24 @@ def addExpense(request):
 
 def deleteHistory(request):
     pass
+
+def editEntry(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        transType = request.POST['transType']
+        amount = request.POST['amount']
+        date = request.POST['date']
+        color = request.POST['color']
+        catName = request.POST.get('category', 1)
+        userID = request.user.id
+        category = Category.objects.filter(catName = catName, color = color, user_id = userID)
+        category = category[0]
+        user = User.objects.get(id = userID)
+        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category_id = category, user_id = user)
+        transaction.save()
+
+    return HttpResponseRedirect('/profile/add-expense')
     
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):

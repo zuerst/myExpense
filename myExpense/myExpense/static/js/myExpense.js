@@ -9,3 +9,15 @@ function selectCategory(catName, catColor) {
     $('#selCatPopup').modal('hide');
 }
 
+function showSelectCategory() {
+    $('#selCatPopup').modal('show');
+}
+
+function deleteEntry(x) {
+    var item = x.closest("tr");
+    var test = x.closest('tr').attr('id');
+    console.log(item);
+    alert("Row index is: " + test);
+}
+
+

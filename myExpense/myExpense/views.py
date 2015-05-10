@@ -37,8 +37,13 @@ def accountPage(request):
 def addExpensePage(request):
     c = {}
     c.update(csrf(request))
-    context = Context({'transactionForm': TransactionForm}, {'template': 'add Expense'})
-    return render_to_response('profile/addExpense.html', c, context)
+    c['transactionForm'] = TransactionForm
+    user = request.user
+    filteredCats = Category.objects.filter(user_id = user.id)
+    c['filteredCats'] = filteredCats
+    recentList = Transaction.objects.filter(user_id = user.id)[:7]
+    c['recentList'] = recentList
+    return render_to_response('profile/addExpense.html', c)
 
 
 # Helper function for addExpensePage.
@@ -51,19 +56,21 @@ def addExpense(request):
         transType = request.POST['transType']
         amount = request.POST['amount']
         date = request.POST['date']
-        catNum = request.POST.get('category', 1)
-        # print catNum
+        color = request.POST['color']
+        catName = request.POST.get('category', 1)
         userID = request.user.id
-        # print userID
-        category = Category.objects.get(catNum = catNum)
+        category = Category.objects.filter(catName = catName, color = color, user_id = userID)
         print category
+        category = category[0]
         user = User.objects.get(id = userID)
-        # print user
         transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category_id = category, user_id = user)
         transaction.save()
 
     return HttpResponseRedirect('/profile/add-expense')
 
+def deleteHistory(request):
+    pass
+    
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):
     return render_to_response('profile/manageCategory.html', {'template': 'Category Page'})
@@ -157,6 +164,6 @@ def test2(request):
                 date_joined="2011-09-01T13:20:30+03:00")
     user.set_password('admin')
     user.save()
-    category = Category(mainCategory = "Drink", subCategory = "Coffee")
+    category = Category(catName = "Drink", color = "Blue")
     category.save()
     return render_to_response('profile/profileMain.html')

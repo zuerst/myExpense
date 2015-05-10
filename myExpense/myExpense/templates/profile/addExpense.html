@@ -10,15 +10,113 @@
                 <!-- /.col-lg-12 -->
     </div>
 
-	<form action="/profile/addingExpense" method="POST">
-		<div>
-            {% csrf_token %}
-            {{ transactionForm.as_p }}
+    <div class="row">
+              <div class="col-md-10 col-md-offset-0">
+                <form class="form-horizontal" action="/profile/addingExpense" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">Title </label>
+                        <div class="col-sm-6">
+                        <input type="text" class="form-control" name="title" value="" id="title" placeholder="Title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">Description </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="description" value="" id="description" placeholder="Description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Type </label>
+                        <div class="col-sm-6">
+                            <input type="radio" name="transType" value="+" id="transType" placeholder="Type"> +++
+                            <input type="radio" name="transType" value="-" id="transType" placeholder="Type"> ---
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Amount </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="amount" value="" id="amount" placeholder="Amount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date </label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" name="date" value="" id="date" placeholder="Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Select Category </label>
+                        <div class="col-sm-6" data-target="#selCatPopup" data-toggle="modal">
+                            <a href="#">Select Category</a>
+                            <input type="text" class="form-control" name="category" value="" id="category" placeholder="Category">
+                            <input type="hidden" class="form-control" name="color" value="" id="color" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-2">
+                        <input type="submit" class="btn btn-default" value="Submit" />
+                        </div>
+                    </div>
+                </form>
         </div>
-		<button type="submit" value="Add Expense">
-			Add Expense
-		</button>
-	</form>
+
+                            <!-- Login Popup -->
+    <div class="modal fade" id="selCatPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Category List</h4>
+                </div>
+                <div class="modal-body">
+                <form method="POST">
+                    
+                    {% for item in filteredCats %}
+                    <button onclick="selectCategory('{{ item.catName }}', '{{ item.color }}')" type="button" class="btn {{ item.color }}">{{ item }}</button>
+                    {% endfor %}
+
+                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <div class="row">
+    <div class="col-md-8c col-md-offset-0">
+        <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th> 
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for recent in recentList %}
+        <tr>
+            <td>{{ recent.title }}</td>
+            <td>{{ recent.description }}</td> 
+            <td>{{ recent.transType }}</td>
+            <td>{{ recent.amount }}</td>
+            <td>{{ recent.date }}</td>
+            <td><button type="button" class="btn {{ recent.category_id.color }}">{{ recent.category_id }}</button></td>
+            <td>Edit</td>
+            <td><form action="/profile/deleteHistory" method="POST"><button type="button">
+        </tr>
+        {% endfor %}
+        <tbody>
+        </table>
+    </div>
+    </div>
+	
 </div>
 
             

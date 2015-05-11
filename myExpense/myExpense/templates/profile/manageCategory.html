@@ -4,7 +4,25 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Welcome! {{ template }}</h1>
+                    <h1 class="page-header">Manage Category</h1>
+                    <table style="width: 180px;" class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Main</th>
+                        <th>Sub</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in categories %}
+                    <tr>
+                        <td>{{ c.catNum }}</td>
+                        <td>{{ c.mainCategory }}</td>
+                        <td>{{ c.subCategory }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

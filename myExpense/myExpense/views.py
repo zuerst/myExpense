@@ -30,7 +30,9 @@ def profilePage(request):
 
 # Rendering main page of '/account' after successful login.
 def accountPage(request):
-    return render_to_response('profile/account.html', {'template': 'accont Page'})
+    userID = request.user.id
+    user = User.objects.get(id = userID)
+    return render_to_response('profile/account.html', {'user': user})
 
 
 # Rendering main page of '/add-expense' after successful login.
@@ -59,19 +61,21 @@ def addExpense(request):
         print category
         user = User.objects.get(id = userID)
         # print user
-        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category_id = category, user_id = user)
+        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category=category, user= user)
         transaction.save()
 
     return HttpResponseRedirect('/profile/add-expense')
 
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):
-    return render_to_response('profile/manageCategory.html', {'template': 'Category Page'})
+    categories = Category.objects.all()
+    return render_to_response('profile/manageCategory.html', {'categories': categories})
 
 
 # Rendering main page of '/report' after successful login.
 def reportPage(request):
-    return render_to_response('profile/report.html', {'template': 'report Page'})
+    transactions = Transaction.objects.all()
+    return render_to_response('profile/report.html', {'transactions': transactions})
 
 
 ############################
@@ -157,6 +161,14 @@ def test2(request):
                 date_joined="2011-09-01T13:20:30+03:00")
     user.set_password('admin')
     user.save()
-    category = Category(mainCategory = "Drink", subCategory = "Coffee")
-    category.save()
+    cat1 = Category(mainCategory = "Drink", subCategory = "Coffee")
+    cat1.save()
+    cat2 = Category(mainCategory = "Drink", subCategory = "Alcohol")
+    cat2.save()
+    cat3 = Category(mainCategory = "Auto")
+    cat3.save()
+    cat4 = Category(mainCategory = "Eat ")
+    cat4.save()
+        
+    # Category.objects.in_bulk(bulkCategory)
     return render_to_response('profile/profileMain.html')

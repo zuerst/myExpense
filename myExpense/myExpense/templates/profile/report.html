@@ -4,7 +4,35 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Welcome! {{ template }}</h1>
+                    <h1 class="page-header">Report</h1>
+                    <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Trnas Type</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in transactions %}
+                    <tr>
+                        <td>{{ t.transID }}</td>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.title }}</td>
+                        <td>{{ t.description }}</td>
+                        <td>{{ t.transType }}</td>
+                        <td>{{ t.amount }}</td>
+                        <td>{{ t.category }}</td>
+                        <td>{{ t.user }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

@@ -10,7 +10,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     {% include 'headerCSS.html' %}
-    <!-- Custom CSS -->
+    {% block extraHeader %}
+    {% endblock %}
+    <!-- Custom CSS Nav -->
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
     <script type="text/javascript" src="{% static 'js/sb-admin-2.js' %}"></script>
 

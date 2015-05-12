@@ -46,7 +46,7 @@ class Transaction(models.Model):
     user = models.ForeignKey(User)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
 
     def __unicode__(self):
         debugString = "Title: {0}, Description: {1}, Type: {2}, Amount: {3}, Date: {4}".format(self.title, self.description, self.transType, self.amount, self.date)

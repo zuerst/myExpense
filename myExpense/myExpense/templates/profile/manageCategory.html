@@ -9,16 +9,14 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Main</th>
-                        <th>Sub</th>
+                        <th>Name</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for c in categories %}
                     <tr>
                         <td>{{ c.catNum }}</td>
-                        <td>{{ c.mainCategory }}</td>
-                        <td>{{ c.subCategory }}</td>
+                        <td>{{ c.catName }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>

@@ -77,6 +77,29 @@ def addExpense(request):
 
     return HttpResponseRedirect('/profile/add-expense')
 
+def transControl(request):
+    if request.method == 'POST':
+        if request.POST['method'] == 'delete':
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.delete()
+            return HttpResponseRedirect('/profile/add-expense')
+        if request.POST['method'] == 'edit':
+            print request.POST
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.title = request.POST['title']
+            target.description = request.POST['description']
+            target.amount = request.POST['amount']
+            target.date = request.POST['date']
+            catNum = request.POST['newCatId']
+            cate = Category.objects.get(catNum = catNum)
+            target.category = cate
+            target.save()
+            return HttpResponseRedirect('/profile/add-expense')
+    return HttpResponseRedirect('/profile/add-expense')
+
+
 def deleteHistory(request):
     pass
 
@@ -172,9 +195,9 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/accounts/register_success')
+            return render_to_response('mainPage.html', {'registered': True})
         else:
-            return render_to_response('accounts/register.html', {'form': form})
+            return render_to_response('mainPage.html', {'form': form})
     args = {}
     args.update(csrf(request))
     args['form'] = RegistrationForm()

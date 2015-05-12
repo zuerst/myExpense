@@ -33,7 +33,7 @@
                             <label id="transactionPlus" class="btn btn-default">
                                 <input type="radio" name="transType" value="+" /> +
                             </label> 
-                            <label id="transactionMinus" class="btn btn-default">
+                            <label id="transactionMinus" class="btn btn-default active">
                                 <input type="radio" name="transType" checked="checked" value="-" /> -
                             </label> 
                         </div>
@@ -106,14 +106,14 @@
                 <tbody>
                     {% for recent in recentList %}
                     <tr>
-                        <td class="nr">{{ recent.title }}</td>
-                        <td>{{ recent.description }}</td> 
-                        <td>{{ recent.transType }}</td>
-                        <td>{{ recent.amount }}</td>
-                        <td>{{ recent.date }}</td>
-                        <td><button type="button" class="btn {{ recent.category.color }}">{{ recent.category }}</button></td>
+                        <td id="tit-{{ recent.transID }}">{{ recent.title }}</td>
+                        <td id="desc-{{ recent.transID }}">{{ recent.description }}</td> 
+                        <td id="trans-{{ recent.transID }}">{{ recent.transType }}</td>
+                        <td id="amount-{{ recent.transID }}">{{ recent.amount }}</td>
+                        <td id="date-{{ recent.transID }}">{{ recent.date }}</td>
+                        <td id="cat-{{ recent.transID }}"><button type="button" class="btn {{ recent.category.color }}">{{ recent.category }}</button></td>
                         <td><p data-placement="top" data-toggle="tooltip" title="Edit">
-                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" >
+                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-trans-id="{{ recent.transID }}" >
                             <span class="glyphicon glyphicon-pencil"></span>
                             </button></p></td>
                         <td><p data-placement="top" data-toggle="tooltip" title="Delete">
@@ -133,45 +133,66 @@
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/profile/editEntry" method="POST">
-                {% csrf_token %}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading">Edit This Entry</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="title" value="" id="title" placeholder="Title">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="description" value="" id="description" placeholder="Description">
-                        </div>
-                        <div class="form-group">
-                            <input type="radio" name="transType" value="+" id="transType" placeholder="Type"> +++
-                            <input type="radio" name="transType" value="-" id="transType" placeholder="Type"> ---
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="amount" value="" id="amount" placeholder="Amount">
-                        </div>
-                        <div class="form-group">
-                            <input type="date" class="form-control" name="date" value="" id="date" placeholder="Date">
-                        </div>
-                        <div class="form-group" data-target="#selCatPopup" data-toggle="modal" onclick="showSelectCategory()">
-                            <a href="#">Select Category<input type="text" class="form-control" name="category" value="" id="category" placeholder="Category"></a>
-                            <input type="hidden" class="form-control" name="color" value="" id="color" placeholder="">
-                            <select class="form-control">
-                                {% for item in filteredCats %}
-                                <option onclick="selectCategory('{{ item.catName }}', '{{ item.color }}')">{{ item }}</option>
-                                {% endfor %}
-                            </select>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Edit This Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="username" class="col-sm-2 control-label">Title </label>
+                        <div class="col-sm-8">
+                        <input type="text" class="form-control" name="eTitle" value="" id="eTitle" placeholder="Title">
                         </div>
                     </div>
-                    <div class="modal-footer ">
-                        <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;">
-                        <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                    </br>
+                    <div class="row">
+                        <label for="email" class="col-sm-2 control-label">Description </label>
+                        <div class="col-sm-8">
+                        <input type="text" class="form-control" name="eDescription" value="" id="eDescription" placeholder="Description"></div>
                     </div>
-                </form>
+                    </br>
+                    <div class="row">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="col-sm-2 control-label">Type </label>
+                            <label name="transactionPlus" id="transactionPlus" class="btn btn-default">
+                                <input type="radio" name="eTransType" id="eTransTypePlus" value="+" /> +
+                            </label> 
+                            <label name="transactionMinus" id="transactionMinus" class="btn btn-default">
+                                <input type="radio" name="eTransType" id="eTransTypeMinus" value="-" /> -
+                            </label> 
+                        </div>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <label for="email" class="col-sm-2 control-label">Amount </label>
+                        <div class="col-sm-8">
+                        <input type="text" class="form-control" name="eAmount" value="" id="eAmount" placeholder="Amount">
+                        </div>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <label for="email" class="col-sm-2 control-label">Date </label>
+                        <div class="col-sm-8">
+                        <input type="date" class="form-control" name="eDate" value="" id="eDate" placeholder="Date">
+                        </div>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <label for="email" class="col-sm-2 control-label">Category </label>
+                        <div class="col-sm-8">
+                        <select id="catNumSelection" class="form-control">
+                            {% for item in filteredCats %}
+                            <option value="{{ item.catNum }}">{{ item }}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;" id="confirmEdit">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                </div>
             </div>
         </div>
     </div>

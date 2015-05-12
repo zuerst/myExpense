@@ -32,6 +32,9 @@ $.ajaxSetup({
 });
 
 $(document).ready(function() {
+    // add dynamic to report table.
+    $('#reportTable').dataTable();
+
 $('#delete').on('shown.bs.modal', function (e) {
   var transId = $(e.relatedTarget).data('trans-id')
   var element = document.getElementById('confirmDelete')

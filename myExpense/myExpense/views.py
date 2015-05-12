@@ -1,6 +1,7 @@
 from django.contrib import auth
+from django.core import serializers
 from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, render_to_response
 from django.template import Context, loader, RequestContext
 
@@ -105,8 +106,20 @@ def manageCategoryPage(request):
 
 # Rendering main page of '/report' after successful login.
 def reportPage(request):
+    c = {}
+    c.update(csrf(request))
     transactions = Transaction.objects.all()
-    return render_to_response('profile/report.html', {'transactions': transactions})
+    c['transactions'] = transactions
+    if request.method == 'POST':
+        startDate = request.POST.get('startDate', '')
+        endDate = request.POST.get('endDate', '')
+        queryList = Transaction.objects.filter(date__gte=startDate, date__lte=endDate)
+        queryJSON = serializers.serialize('json', queryList)
+        print queryJSON
+        return HttpResponse(content=queryJSON, content_type="application/json", status=200)
+        # return HttpResponse(status=200)
+    else:
+        return render_to_response('profile/report.html', c)
 
 
 ############################

@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'ordering': ['date'],
+                'ordering': ['-date'],
             },
         ),
     ]

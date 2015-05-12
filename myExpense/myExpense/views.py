@@ -76,6 +76,29 @@ def addExpense(request):
 
     return HttpResponseRedirect('/profile/add-expense')
 
+def transControl(request):
+    if request.method == 'POST':
+        if request.POST['method'] == 'delete':
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.delete()
+            return HttpResponseRedirect('/profile/add-expense')
+        if request.POST['method'] == 'edit':
+            print request.POST
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.title = request.POST['title']
+            target.description = request.POST['description']
+            target.amount = request.POST['amount']
+            target.date = request.POST['date']
+            catNum = request.POST['newCatId']
+            cate = Category.objects.get(catNum = catNum)
+            target.category = cate
+            target.save()
+            return HttpResponseRedirect('/profile/add-expense')
+    return HttpResponseRedirect('/profile/add-expense')
+
+
 def deleteHistory(request):
     pass
 

@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^profile/addingExpense$', 'myExpense.views.addExpense'),
     url(r'^profile/manage-category$', 'myExpense.views.manageCategoryPage'),
     url(r'^profile/report$', 'myExpense.views.reportPage'),
+    url(r'^profile/transControl$', 'myExpense.views.transControl'),
 
     # URL for Login and Register User.
     url(r'^accounts/login/$', 'myExpense.views.login'),

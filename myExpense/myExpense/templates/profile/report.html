@@ -3,6 +3,10 @@
 {% block content %}
 <script type="text/javascript">
 $(document).ready(function() {
+
+  // add dynamic to report table.
+  $('#reportTable').dataTable();
+
   $('#daterange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
   $('#daterange').daterangepicker({
@@ -37,6 +41,7 @@ function getReportTable(start, end) {
         dataType: "json",
         data : { method : "load", startDate : start, endDate: end},
         success : function(response) {
+            month_names_short = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.']
             var tableHTML = ''
             $('#reportTable').empty();
             tableHTML += '<table id="reportTable" class="table table-striped table-bordered">'
@@ -56,7 +61,8 @@ function getReportTable(start, end) {
                 id = response[i]['pk']
                 amount = response[i].fields['amount']
                 category = response[i].fields['category']
-                date = response[i].fields['date']
+                date = new Date(response[i].fields['date'])
+                reportDate = month_names_short[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
                 description = response[i].fields['description']
                 title = response[i].fields['title']
                 transType = response[i].fields['transType']
@@ -64,7 +70,7 @@ function getReportTable(start, end) {
 
                 tableHTML += '<tr>'
                 tableHTML +=        '<td>'+ id + '</td>'
-                tableHTML +=        '<td>' + date + '</td>'
+                tableHTML +=        '<td>' + reportDate + '</td>'
                 tableHTML +=        '<td>' + title + '</td>'
                 tableHTML +=        '<td>' + description +'</td>'
                 tableHTML +=        '<td>' + transType + '</td>'

@@ -36,7 +36,7 @@ def accountPage(request):
     return render_to_response('profile/account.html', {'user': user})
 
 
-# Rendering main page of '/add-expense' after successful login.
+# Rendering main page of '/addExpense' after successful login.
 def addExpensePage(request):
     c = {}
     c.update(csrf(request))
@@ -75,7 +75,7 @@ def addExpense(request):
         transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category=category, user= user)
         transaction.save()
 
-    return HttpResponseRedirect('/profile/add-expense')
+    return HttpResponseRedirect('/profile/addExpense')
 
 def transControl(request):
     if request.method == 'POST':
@@ -83,7 +83,7 @@ def transControl(request):
             transID = request.POST['transID']
             target = Transaction.objects.get(transID = transID)
             target.delete()
-            return HttpResponseRedirect('/profile/add-expense')
+            return HttpResponseRedirect('/profile/addExpense')
         if request.POST['method'] == 'edit':
             print request.POST
             transID = request.POST['transID']
@@ -96,8 +96,8 @@ def transControl(request):
             cate = Category.objects.get(catNum = catNum)
             target.category = cate
             target.save()
-            return HttpResponseRedirect('/profile/add-expense')
-    return HttpResponseRedirect('/profile/add-expense')
+            return HttpResponseRedirect('/profile/addExpense')
+    return HttpResponseRedirect('/profile/addExpense')
 
 
 def deleteHistory(request):
@@ -119,9 +119,9 @@ def editEntry(request):
         transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category = category, user = user)
         transaction.save()
 
-    return HttpResponseRedirect('/profile/add-expense')
+    return HttpResponseRedirect('/profile/addExpense')
     
-# Rendering main page of '/manage-category' after successful login.
+# Rendering main page of '/manageCategory' after successful login.
 def manageCategoryPage(request):
     categories = Category.objects.all()
     return render_to_response('profile/manageCategory.html', {'categories': categories})
@@ -138,7 +138,6 @@ def reportPage(request):
         endDate = request.POST.get('endDate', '')
         queryList = Transaction.objects.filter(date__gte=startDate, date__lte=endDate)
         queryJSON = serializers.serialize('json', queryList)
-        print queryJSON
         return HttpResponse(content=queryJSON, content_type="application/json", status=200)
         # return HttpResponse(status=200)
     else:

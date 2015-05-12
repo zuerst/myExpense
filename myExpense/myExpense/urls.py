@@ -26,9 +26,9 @@ urlpatterns = [
     # Main profile page (Successful login)
     url(r'^profile$', 'myExpense.views.profilePage'),
     url(r'^profile/account$', 'myExpense.views.accountPage'),
-    url(r'^profile/add-expense$', 'myExpense.views.addExpensePage'),
+    url(r'^profile/addExpense$', 'myExpense.views.addExpensePage'),
     url(r'^profile/addingExpense$', 'myExpense.views.addExpense'),
-    url(r'^profile/manage-category$', 'myExpense.views.manageCategoryPage'),
+    url(r'^profile/manageCategory$', 'myExpense.views.manageCategoryPage'),
     url(r'^profile/report$', 'myExpense.views.reportPage'),
     url(r'^profile/transControl$', 'myExpense.views.transControl'),
 

@@ -7,32 +7,43 @@ from django.forms import ModelForm
 
 # Table for Category of expense.
 class Category(models.Model):
+    COLOR_TYPES = (
+        ('whiteButton', 'whiteButton'),
+        ('redButton', 'redButton'),
+        ('blueButton', 'blueButton'),
+        ('greenButton', 'greenButton'),
+        ('tealButton', 'tealButton'),
+        ('orangeButton', 'orangeButton'),
+    )
     catNum = models.AutoField('Category Num', max_length=8, primary_key=True)
-    mainCategory = models.CharField('Main Category', max_length=100, null=False)
-    subCategory = models.CharField('Sub Category', max_length=100, null=False)
+    catName = models.CharField('Category Name', max_length=100, null=False)
+    color = models.CharField('Color', max_length=100, choices=COLOR_TYPES, null=False)
+    user = models.ForeignKey(User)
+
+    def __unicode__(self):
+        catInfo = self.catName
+        return catInfo
 
     class Meta:
-        ordering = ['mainCategory']
+        ordering = ['catName']
         
     def __unicode__(self):
-        categoryString = "{0}: {1}".format(self.mainCategory, self.subCategory)
-        return categoryString
+       return self.catName
 
 # Table for Transactions
 class Transaction(models.Model):
     transID = models.AutoField('Transaction ID', max_length=8, primary_key=True)
     TRANSACTION_TYPES = (
-        ('Debit', 'Debit'),
-        ('Credit', 'Credit'),
+        ('+', '+'),
+        ('-', '-'),
     )
     title = models.CharField('Title', max_length=100, null=False)
     description = models.CharField('Description', max_length=100, null=True)
     transType = models.CharField('Transaction Type', max_length=100, choices=TRANSACTION_TYPES, null=False)
     amount = models.FloatField(null=False)
     date = models.DateField('Transaction Date', null=False)
-    category = models.ForeignKey(Category, default=1)
-    user = models.ForeignKey(User, default=1)
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False)
+    category = models.ForeignKey(Category)
+    user = models.ForeignKey(User)
 
     class Meta:
         ordering = ['date']

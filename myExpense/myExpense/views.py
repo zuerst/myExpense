@@ -39,8 +39,19 @@ def accountPage(request):
 def addExpensePage(request):
     c = {}
     c.update(csrf(request))
-    context = Context({'transactionForm': TransactionForm}, {'template': 'add Expense'})
-    return render_to_response('profile/addExpense.html', c, context)
+    c['transactionForm'] = TransactionForm
+    user = request.user
+    filteredCats = Category.objects.filter(user = user.id)
+    c['filteredCats'] = filteredCats
+    recentList = Transaction.objects.filter(user = user.id)[:7]
+    c['recentList'] = recentList
+    if request.method == 'POST':
+        if request.POST['method'] == "delete":
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.delete()
+            return render_to_response('profile/addExpense.html', c)
+    return render_to_response('profile/addExpense.html', c)
 
 
 # Helper function for addExpensePage.
@@ -53,19 +64,39 @@ def addExpense(request):
         transType = request.POST['transType']
         amount = request.POST['amount']
         date = request.POST['date']
-        catNum = request.POST.get('category', 1)
-        # print catNum
+        color = request.POST['color']
+        catName = request.POST.get('category', 1)
         userID = request.user.id
-        # print userID
-        category = Category.objects.get(catNum = catNum)
+        category = Category.objects.filter(catName = catName, color = color, user = userID)
         print category
+        category = category[0]
         user = User.objects.get(id = userID)
-        # print user
         transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category=category, user= user)
         transaction.save()
 
     return HttpResponseRedirect('/profile/add-expense')
 
+def deleteHistory(request):
+    pass
+
+def editEntry(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        transType = request.POST['transType']
+        amount = request.POST['amount']
+        date = request.POST['date']
+        color = request.POST['color']
+        catName = request.POST.get('category', 1)
+        userID = request.user.id
+        category = Category.objects.filter(catName = catName, color = color, user = userID)
+        category = category[0]
+        user = User.objects.get(id = userID)
+        transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category = category, user = user)
+        transaction.save()
+
+    return HttpResponseRedirect('/profile/add-expense')
+    
 # Rendering main page of '/manage-category' after successful login.
 def manageCategoryPage(request):
     categories = Category.objects.all()
@@ -148,10 +179,13 @@ def register_success(request):
 # Creating some test case.
 def test(request):
     u = User.objects.get(id=1)
-    c = Category.objects.get(mainCategory='Drink')
+    c = Category.objects.filter(catName='Drink')[0]
     t = Transaction(title='test title', description='test description', transType='Debit', amount=100, date='2015-05-01', category=c, user=u)
+    for i in range(1,10):
+        trans = Transaction(title='test title {0}'.format(i), description='test description {0}'.format(i), transType='Debit', amount=100 + i, date='2015-05-{0}'.format(i), category=c, user=u)
+        trans.save()
     t.save()
-    return render_to_response('login.html')
+    return render_to_response('profile/profileMain.html')
 
 def test2(request):
     user = User(id=1, username="admin", is_active=True,
@@ -161,14 +195,7 @@ def test2(request):
                 date_joined="2011-09-01T13:20:30+03:00")
     user.set_password('admin')
     user.save()
-    cat1 = Category(mainCategory = "Drink", subCategory = "Coffee")
-    cat1.save()
-    cat2 = Category(mainCategory = "Drink", subCategory = "Alcohol")
-    cat2.save()
-    cat3 = Category(mainCategory = "Auto")
-    cat3.save()
-    cat4 = Category(mainCategory = "Eat ")
-    cat4.save()
-        
-    # Category.objects.in_bulk(bulkCategory)
+    category = Category(catName = "Drink", color = "blueButton", user = user)
+    category.save()
+
     return render_to_response('profile/profileMain.html')

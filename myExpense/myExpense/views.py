@@ -43,6 +43,12 @@ def addExpensePage(request):
     c['filteredCats'] = filteredCats
     recentList = Transaction.objects.filter(user_id = user.id)[:7]
     c['recentList'] = recentList
+    if request.method == 'POST':
+        if request.POST['method'] == "delete":
+            transID = request.POST['transID']
+            target = Transaction.objects.get(transID = transID)
+            target.delete()
+            return render_to_response('profile/addExpense.html', c)
     return render_to_response('profile/addExpense.html', c)
 
 
@@ -169,10 +175,13 @@ def register_success(request):
 # Creating some test case.
 def test(request):
     u = User.objects.get(id=1)
-    c = Category.objects.get(mainCategory='Drink')
-    t = Transaction(title='test title', description='test description', transType='Debit', amount=100, date='2015-05-01', category=c, user=u)
+    c = Category.objects.filter(catName='Drink')[0]
+    t = Transaction(title='test title', description='test description', transType='Debit', amount=100, date='2015-05-01', category_id=c, user_id=u)
+    for i in range(1,10):
+        trans = Transaction(title='test title {0}'.format(i), description='test description {0}'.format(i), transType='Debit', amount=100 + i, date='2015-05-{0}'.format(i), category_id=c, user_id=u)
+        trans.save()
     t.save()
-    return render_to_response('login.html')
+    return render_to_response('profile/profileMain.html')
 
 def test2(request):
     user = User(id=1, username="admin", is_active=True,
@@ -182,6 +191,8 @@ def test2(request):
                 date_joined="2011-09-01T13:20:30+03:00")
     user.set_password('admin')
     user.save()
-    category = Category(catName = "Drink", color = "Blue")
+    category = Category(catName = "Drink", color = "blueButton")
     category.save()
+
+
     return render_to_response('profile/profileMain.html')

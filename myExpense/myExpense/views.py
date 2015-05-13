@@ -194,7 +194,10 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render_to_response('mainPage.html', {'registered': True})
+            args = {}
+            args.update(csrf(request))
+            args['registered'] = True
+            return render_to_response('mainPage.html', args)
         else:
             return render_to_response('mainPage.html', {'form': form})
     args = {}

@@ -199,15 +199,17 @@ def logout(request):
 
 
 def register_user(request):
+    args = {}
+    args.update(csrf(request))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render_to_response('mainPage.html', {'registered': True})
+            args['registered'] = True
+            return render_to_response('mainPage.html', args)
         else:
-            return render_to_response('mainPage.html', {'form': form})
-    args = {}
-    args.update(csrf(request))
+            args['form'] = form
+            return render_to_response('mainPage.html', args)
     args['form'] = RegistrationForm()
     return render(request, 'accounts/register.html', args)
 

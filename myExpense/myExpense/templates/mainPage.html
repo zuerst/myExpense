@@ -183,11 +183,7 @@
     <!-- /.banner -->
 
     <!-- Login Popup -->
-    {% if registered %}
-    <div class="modal fade in" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block;">
-    {% else %}
     <div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    {% endif %}
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -228,11 +224,7 @@
     </div>
     
     <!-- Registration Popup -->
-    {% if form.errors %}
-    <div class="modal fade in" id="registerPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block;">
-    {% else %}
     <div class="modal fade" id="registerPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    {% endif %}
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -297,5 +289,20 @@
         </div>
     </footer>
 </body>
+{% if registered %}
+<script type="text/javascript">
+    $(window).load(function(){
+        $('#loginPopup').modal('show');
+    });
+</script>
+{% endif %}
+
+{% if form.errors %}
+<script type="text/javascript">
+    $(window).load(function(){
+        $('#registerPopup').modal('show');
+    });
+</script>
+{% endif %}
 
 </html>

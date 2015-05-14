@@ -26,10 +26,9 @@ urlpatterns = [
     # Main profile page (Successful login)
     url(r'^profile$', 'myExpense.views.profilePage'),
     url(r'^profile/account$', 'myExpense.views.accountPage'),
-    url(r'^profile/add-expense$', 'myExpense.views.addExpensePage'),
+    url(r'^profile/addExpense$', 'myExpense.views.addExpensePage'),
     url(r'^profile/addingExpense$', 'myExpense.views.addExpense'),
-    url(r'^profile/deleteHistory$', 'myExpense.views.deleteHistory'),
-    url(r'^profile/manage-category$', 'myExpense.views.manageCategoryPage'),
+    url(r'^profile/manageCategory$', 'myExpense.views.manageCategoryPage'),
     url(r'^profile/report$', 'myExpense.views.reportPage'),
     url(r'^profile/transControl$', 'myExpense.views.transControl'),
 
@@ -40,7 +39,6 @@ urlpatterns = [
     url(r'^accounts/invalid_login/$', 'myExpense.views.invalid_login'),
     url(r'^accounts/logout/$', 'myExpense.views.logout'),
     url(r'^accounts/register/$', 'myExpense.views.register_user'),
-    url(r'^accounts/register_success/$', 'myExpense.views.register_success'),
 
     # Some Test urls Adding simple data into Transaction table.
     url(r'^test/', 'myExpense.views.test'),

@@ -1,70 +1,23 @@
 {% extends "profile/profileBase.html" %}
 
+{% load staticfiles %}
+
+{% block extraHeader %}
+<script type="text/javascript" src="{% static 'js/profileAddExpense.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div id="page-wrapper">
 
     <div class="row">
         <div class="col-lg-12">
-                <h1 class="page-header">Welcome! {{ template }}</h1>
+            <h1 class="page-header">Add Expense</h1>
         </div>
-                <!-- /.col-lg-12 -->
     </div>
 
     <div class="row">
         <div class="col-md-10 col-md-offset-0">
-            <form class="form-horizontal" action="/profile/addingExpense" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">Title </label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="title" value="" id="title" placeholder="Title">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Description </label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="description" value="" id="description" placeholder="Description">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Type </label>
-                    <div class="col-sm-6">
-                        <div class="btn-group" data-toggle="buttons">
-                            <label id="transactionPlus" class="btn btn-default">
-                                <input type="radio" name="transType" value="+" /> +
-                            </label> 
-                            <label id="transactionMinus" class="btn btn-default active">
-                                <input type="radio" name="transType" checked="checked" value="-" /> -
-                            </label> 
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Amount </label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" name="amount" value="" id="amount" placeholder="Amount">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Date </label>
-                    <div class="col-sm-6">
-                        <input type="date" class="form-control" name="date" value="" id="date" placeholder="Date">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Select Category </label>
-                    <div class="col-sm-6" data-target="#selCatPopup" data-toggle="modal">
-                        <a href="#">Select Category</a>
-                        <input type="text" class="form-control" name="category" value="" id="category" placeholder="Category">
-                        <input type="hidden" class="form-control" name="color" value="" id="color" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-2">
-                    <input type="submit" class="btn btn-default" value="Submit" />
-                    </div>
-                </div>
-            </form>
+            {% include "profile/addExpenseTemplate.html" %}
         </div>
     </div>
 
@@ -79,7 +32,7 @@
                 <div class="modal-body">
                     <form method="POST">
                         {% for item in filteredCats %}
-                        <button data-dismiss="modal" onclick="selectCategory('{{ item.catName }}', '{{ item.color }}')" type="button" class="btn {{ item.color }}">{{ item }}</button>
+                        <button data-dismiss="modal" onclick="selectCategory('{{ item.catNum }}', '{{ item.catName }}')" type="button" class="btn {{ item.color }}">{{ item }}</button>
                         {% endfor %}
                     </form>
                 </div>
@@ -90,7 +43,7 @@
     <!-- Recent Transaction History Table -->
     <div class="row">
         <div class="col-md-8c col-md-offset-0">
-            <table id="mytable" class="table table-bordred table-striped">
+            <table id="shortHistory" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -128,8 +81,9 @@
         </div>
     </div>
 
+<!-- {% include "profile/editDeleteTemplate.html" %} -->
 
-
+    <!-- Template for Edit Popup -->
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -197,9 +151,7 @@
         </div>
     </div>
 
-
-
-
+    <!-- Template for Delete Popup -->
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -222,7 +174,5 @@
             </div>
         </div>
     </div>
-
-
             
 {% endblock %}

@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    $(function(){
+      $("#includedContent").load("b.html"); 
+    });
+
     $('#delete').on('shown.bs.modal', function (e) {
         var transId = $(e.relatedTarget).data('trans-id')
         var element = document.getElementById('confirmDelete')
@@ -39,17 +43,22 @@ $(document).ready(function() {
         date = date.replace (",", "");
         mdy = date.split(" ");
 
-        var month = mdy[0].toLowerCase();
-        var monthNamesShort = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.']
-        month = String(monthNamesShort.indexOf(month));
+        var month = mdy[0]
+        var year = mdy[2]
+        var day = mdy[1]
+        var monthNamesShort = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        month = String(monthNamesShort.indexOf(month) + 1);
 
         if (month[1] == null) {
             month = "0"+String(month)
         }
+        if (day[1] == null) {
+            day = "0"+String(day)
+        }
 
-        year = mdy[2]
-        day = mdy[1]
-        var fullDate = mdy[2]+"-"+month+"-"+mdy[1]
+        var fullDate = year+"-"+month+"-"+day
+
+        console.log(fullDate)
 
         document.getElementById("eTitle").value = title;
         document.getElementById("eDescription").value = description;
@@ -90,9 +99,10 @@ function resetRadioButtons() {
     document.getElementById("eTransTypeMinus").checked = false;
 }
 
-function selectCategory(catName, catColor) {
+function selectCategory(catNum, catName) {
+    document.getElementById("categoryNum").value = catNum;
     document.getElementById("category").value = catName;
-    document.getElementById("color").value = catColor;
+    console.log(catNum);
 }
 
 function editCategory(catNum) {
@@ -137,6 +147,45 @@ function editEntry(transId, eTransType) {
         type : "POST",
         data : { method : "edit", transID : transId, title : eTitle, description : eDescription, 
                 transType : eTransType, amount : eAmount, date : eDate, newCatId : catNum},
+        beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    },
+        success : function(json) {
+            console.log("success");
+            location.reload();
+        }
+    })
+}
+
+function addEntry() {
+    var aTitle = document.getElementById("title").value;
+    var aDescription = document.getElementById("description").value;
+    var radios = document.getElementsByName("transType");
+    for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        var aTransType = radios[i].value;
+        break;
+    }}
+    var aAmount = document.getElementById("amount").value;
+    var aDate = document.getElementById("date").value;
+    var category = document.getElementById("category").value;
+    var aCatNum = document.getElementById("categoryNum").value;
+    // catNum = catNumSelect.options[catNumSelect.selectedIndex].value;
+
+    if (isNaN(aAmount) == true) {
+        alert("amount must be a number!")
+    }
+
+    console.log(aCatNum)
+
+    csrfmiddlewaretoken = '{{ csrf_token }}'
+    $.ajax({
+        url : "/profile/transControl",
+        type : "POST",
+        data : { method : "add", title : aTitle, description : aDescription, 
+                transType : aTransType, amount : aAmount, date : aDate, catNum : aCatNum},
         beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);

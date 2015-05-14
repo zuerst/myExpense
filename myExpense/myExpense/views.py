@@ -59,7 +59,6 @@ def addExpensePage(request):
 # Add expense when button is clicked.
 def addExpense(request):
     if request.method == 'POST':
-        print request.POST
         title = request.POST['title']
         description = request.POST['description']
         transType = request.POST['transType']
@@ -69,7 +68,6 @@ def addExpense(request):
         catName = request.POST.get('category', 1)
         userID = request.user.id
         category = Category.objects.filter(catName = catName, color = color, user = userID)
-        print category
         category = category[0]
         user = User.objects.get(id = userID)
         transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category=category, user= user)
@@ -85,7 +83,6 @@ def transControl(request):
             target.delete()
             return HttpResponseRedirect('/profile/addExpense')
         if request.POST['method'] == 'edit':
-            print request.POST
             transID = request.POST['transID']
             target = Transaction.objects.get(transID = transID)
             target.title = request.POST['title']
@@ -97,8 +94,20 @@ def transControl(request):
             target.category = cate
             target.save()
             return HttpResponseRedirect('/profile/addExpense')
+        if request.POST['method'] == 'add':
+            title = request.POST['title']
+            description = request.POST['description']
+            transType = request.POST['transType']
+            amount = request.POST['amount']
+            date = request.POST['date']
+            catNum = request.POST['catNum']
+            category = Category.objects.get(catNum = catNum)
+            userId = request.user.id
+            user = User.objects.get(id = userId)
+            transaction = Transaction(title = title, description = description, transType = transType, amount = amount, date = date, category = category, user = user)
+            transaction.save()
+            return HttpResponseRedirect('/profile/addExpense')
     return HttpResponseRedirect('/profile/addExpense')
-
 
 def deleteHistory(request):
     pass

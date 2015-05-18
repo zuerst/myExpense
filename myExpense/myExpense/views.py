@@ -245,3 +245,11 @@ def test2(request):
     category.save()
 
     return render_to_response('profile/profileMain.html')
+
+def gen_admin(request):
+    admin = User(id=, username="admin", is_active=True,
+                  is_superuser=True, is_staff=True)
+    admin.set_password('admin')
+    adminn.save()
+
+    return HttpResponseRedirect('/admin')

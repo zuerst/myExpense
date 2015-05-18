@@ -94,4 +94,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-myExpense/myExpense/migrations/*
+# Ignoring local migrations changes
+myExpense/myExpense/migrations/

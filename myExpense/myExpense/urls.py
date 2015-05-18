@@ -43,4 +43,7 @@ urlpatterns = [
     # Some Test urls Adding simple data into Transaction table.
     url(r'^test/', 'myExpense.views.test'),
     url(r'^test2/', 'myExpense.views.test2'),
+
+    # Generate admin user
+    url(r'^/gen_admin', 'myExpense.views.gen_admin'),
 ]

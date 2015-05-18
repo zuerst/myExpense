@@ -51,8 +51,8 @@ def addExpensePage(request):
             transID = request.POST['transID']
             target = Transaction.objects.get(transID = transID)
             target.delete()
-            return render_to_response('profile/addExpense.html', c)
-    return render_to_response('profile/addExpense.html', c)
+            return render_to_response('profile/addExpense/addExpense.html', c)
+    return render_to_response('profile/addExpense/addExpense.html', c)
 
 
 # Helper function for addExpensePage.
@@ -218,6 +218,19 @@ def register_success(request):
     return render_to_response('accounts/register_success.html')
 
 
+
+
+################################################
+# Groups View
+################################################
+
+def groups(request):
+    return render_to_response('profile/groups/groupsViewTemplate.html')
+
+def groupDetail(request, groupId):
+    return return_to_response('profile/groups/groupDetailsViewTemplate.html')
+
+
 ################################################
 # Requets for creating Test Cases
 ################################################
@@ -247,9 +260,9 @@ def test2(request):
     return render_to_response('profile/profileMain.html')
 
 def gen_admin(request):
-    admin = User(id=, username="admin", is_active=True,
+    admin = User(id=1, username="admin", is_active=True,
                   is_superuser=True, is_staff=True)
     admin.set_password('admin')
-    adminn.save()
+    admin.save()
 
     return HttpResponseRedirect('/admin')

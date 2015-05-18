@@ -32,6 +32,10 @@ urlpatterns = [
     url(r'^profile/report$', 'myExpense.views.reportPage'),
     url(r'^profile/transControl$', 'myExpense.views.transControl'),
 
+    # Groups
+    url(r'^profile/groups/$', 'myExpense.views.groups'),
+    url(r'^profile/groups/(?P<id>\d+)/$', 'myExpense.views.groupDetail'),
+    
     # URL for Login and Register User.
     url(r'^accounts/login/$', 'myExpense.views.login'),
     url(r'^accounts/auth/$', 'myExpense.views.auth_view'),
@@ -44,6 +48,7 @@ urlpatterns = [
     url(r'^test/', 'myExpense.views.test'),
     url(r'^test2/', 'myExpense.views.test2'),
 
+
     # Generate admin user
-    url(r'^/gen_admin', 'myExpense.views.gen_admin'),
+    url(r'^gen_admin/', 'myExpense.views.gen_admin'),
 ]

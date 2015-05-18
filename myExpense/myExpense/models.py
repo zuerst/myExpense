@@ -15,8 +15,8 @@ class Group(models.Model):
     )
     name = models.CharField('Group Name', max_length=100, null=False)
     description = models.CharField('Group Name', max_length=300, null=False, blank=True)
-    transaction = models.ManyToManyField('Transaction', null=True, blank=True)
-    user = models.ManyToManyField(User, null=True, blank=True)
+    transaction = models.ManyToManyField('Transaction')
+    user = models.ManyToManyField(User)
     lastUpdated = models.DateTimeField('Last Updated', null=False)
     color = models.CharField('Color', max_length=100, choices=COLOR_TYPES, null=False)
 

@@ -1,0 +1,62 @@
+
+        <!-- Template for addExpense -->
+        <div class="col-md-10 col-md-offset-0">
+            {% csrf_token %}
+            <div class="row">
+                <label class="col-sm-2">Title </label>
+                <div class="col-sm-7">
+                <input type="text" class="form-control" name="title" value="" id="title" placeholder="Title">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="col-sm-2">Description </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="description" value="" id="description" placeholder="Description">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="col-sm-2">Type </label>
+                <div class="col-sm-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label id="transactionPlus" class="btn btn-default">
+                            <input type="radio" name="transType" value="+" /> +
+                        </label> 
+                        <label id="transactionMinus" class="btn btn-default active">
+                            <input type="radio" name="transType" checked="checked" value="-" /> -
+                        </label> 
+                    </div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="col-sm-2">Amount </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="amount" value="" id="amount" placeholder="Amount">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="col-sm-2">Date </label>
+                <div class="col-sm-7">
+                    <input type="date" class="form-control" name="date" value="" id="date" placeholder="Date">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <label class="col-sm-2">Select Category </label>
+                <div class="col-sm-7" data-target="#selCatPopup" data-toggle="modal">
+                    <a href="#">Select Category</a>
+                    <input type="text" class="form-control" name="category" value="" id="category" placeholder="Category">
+                    <input type="hidden" class="form-control" name="color" value="" id="categoryNum" placeholder="">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-2">
+                <input type="submit" onclick="addEntry()" class="btn btn-default" value="Submit" />
+                </div>
+            </div>
+            </br>
+        </div>

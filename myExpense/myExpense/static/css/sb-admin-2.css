@@ -27,6 +27,10 @@ body {
     }
 }
 
+.topnav {
+    font-size: 14px; 
+}
+
 .navbar-top-links {
     margin-right: 0;
 }

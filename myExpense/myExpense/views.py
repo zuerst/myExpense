@@ -211,7 +211,7 @@ def register_user(request):
             args['form'] = form
             return render_to_response('mainPage.html', args)
     args['form'] = RegistrationForm()
-    return render(request, 'accounts/register.html', args)
+    return render(request, 'mainPage.html', args)
 
 
 def register_success(request):

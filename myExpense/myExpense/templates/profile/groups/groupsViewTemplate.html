@@ -1,0 +1,28 @@
+{% extends "profile/profileBase.html" %}
+
+{% load staticfiles %}
+{% block extraHeader %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/groupsView.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div id="page-wrapper">
+	<div class="groups-container">
+		<section id="blog-landing">
+			{% for group in groups %}
+			<div class="white-panel">
+				<div class="item">
+					<a href="/profile/groups/{{group.group.id}}">
+					<span class="group-link"></span> 
+					</a>
+					<h1>{{ group.group.name }}</h1>
+					{% for user in group.users %}
+					<p>Members: {{ user }}</p>
+					{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+		</section>
+	</div>
+</div>
+{% endblock %}

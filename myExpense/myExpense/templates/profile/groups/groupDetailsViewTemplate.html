@@ -1,0 +1,14 @@
+{% extends "profile/profileBase.html" %}
+
+{% load staticfiles %}
+{% block extraHeader %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/groupDetailView.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div id="page-wrapper">
+	<div class="group-details-container">
+		{{group.name}}
+	</div>
+</div>
+{% endblock %}

@@ -220,16 +220,53 @@ def register_success(request):
 
 
 
+
+############################
+# dashboard Main Page
+############################
+
+
+# Rendering main page of '/dashboard' after successful login.
+def dashboard(request):
+    args = {}
+    args['template'] = 'Main Page'
+    args['user_authed'] = is_authenticated(request)
+    return render_to_response('main/dashboard.html', args)
+
+# def landingView(request):
+#     pass
+
+# def dashboardView(request):
+#     pass
+
 ################################################
 # Groups View
 ################################################
 
+def groupDetail(request, id):
+    args = {}
+    args['group'] = Group.objects.get(id=id)
+    args['user_authed'] = is_authenticated(request)
+    if request.user:
+        return render(request, 
+                      'profile/groups/groupDetailsViewTemplate.html', 
+                      args)
+    else:
+        return redirect('/')
+
+
 def groups(request):
-    return render_to_response('profile/groups/groupsViewTemplate.html')
+    userId = request.user.id
 
-def groupDetail(request, groupId):
-    return return_to_response('profile/groups/groupDetailsViewTemplate.html')
-
+    ret_groups = []
+    groups = Group.objects.filter(users=User.objects.get(id=userId))
+    for group in groups:
+        users = group.users.all()
+        ret_group = {'group' : group, 'users' : users}
+        ret_groups.append(ret_group)
+            
+    text = {'groups' : ret_groups, 'template' : 'Main Page'}
+    return render_to_response('profile/groups/groupsViewTemplate.html', text)
 
 ################################################
 # Requets for creating Test Cases
@@ -258,6 +295,15 @@ def test2(request):
     category.save()
 
     return render_to_response('profile/profileMain.html')
+
+
+#helpers#
+
+def is_authenticated(request):
+    if request.user and request.user.is_authenticated():
+        return True
+    return False
+
 
 def gen_admin(request):
     admin = User(id=1, username="admin", is_active=True,

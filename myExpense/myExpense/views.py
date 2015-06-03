@@ -8,6 +8,8 @@ from django.template import Context, loader, RequestContext
 from forms import RegistrationForm
 from models import *
 
+import datetime
+
 ############################
 # Main Page
 ############################
@@ -256,16 +258,34 @@ def groupDetail(request, id):
 
 
 def groups(request):
-    userId = request.user.id
+    if request.method == 'POST':
+        groupname = request.POST['groupname']
+        description = request.POST['description']
+        last_updated = datetime.datetime.now()
+        user = User.objects.get(id=request.user.id)
+        group = Group(name = groupname, description = description, lastUpdated=last_updated)
+        
+        group.save()
+        
+        user.group_set.add(group)
+        user.save()
 
-    ret_groups = []
-    groups = Group.objects.filter(users=User.objects.get(id=userId))
-    for group in groups:
-        users = group.users.all()
-        ret_group = {'group' : group, 'users' : users}
-        ret_groups.append(ret_group)
-            
-    text = {'groups' : ret_groups, 'template' : 'Main Page'}
+        group.users.add(user)
+        text = {}
+    else:
+        userId = request.user.id
+
+        ret_groups = []
+        groups = Group.objects.filter(users=User.objects.get(id=userId))
+        for group in groups:
+            users = group.users.all()
+            ret_group = {'group' : group, 'users' : users}
+            ret_groups.append(ret_group)
+                
+        text = {'groups' : ret_groups, 'template' : 'Main Page'}
+
+    text.update(csrf(request))
+
     return render_to_response('profile/groups/groupsViewTemplate.html', text)
 
 ################################################

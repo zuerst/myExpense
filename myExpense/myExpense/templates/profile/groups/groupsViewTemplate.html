@@ -3,26 +3,82 @@
 {% load staticfiles %}
 {% block extraHeader %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/groupsView.css' %}"/>
+<script type="text/javascript" src="{% static 'js/groupsView.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div id="page-wrapper">
+	<li data-target="#addGroupPopUp" data-toggle="modal">
+		<a href="#" type="button" class="add-group-btn btn btn-default"> 
+			Add Group
+		</a>
+	</li>
+
 	<div class="groups-container">
 		<section id="blog-landing">
 			{% for group in groups %}
-			<div class="white-panel">
-				<div class="item">
-					<a href="/profile/groups/{{group.group.id}}">
-					<span class="group-link"></span> 
-					</a>
-					<h1>{{ group.group.name }}</h1>
+			<div class="panel panel-default">
+				<a href="/profile/groups/{{group.group.id}}">
+				<span class="group-link"></span> 
+				</a>
+				<div class="panel-heading">
+					<h3 class="panel-title">{{group.group.name}}</h3>
+				</div>
+				<div class="panel-body">
+					<p>Members: 
 					{% for user in group.users %}
-					<p>Members: {{ user }}</p>
-					{% endfor %}
+						{{ user }} 
+					{% endfor %}</p>
 				</div>
 			</div>
 			{% endfor %}
 		</section>
 	</div>
 </div>
+
+
+    <!-- Create Group Popup -->
+    <div class="modal fade" id="addGroupPopUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">New Group</h4>
+                </div>
+
+                <div class="modal-body">
+
+                <form class="form-horizontal" action="/profile/groups/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">Groupname</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="groupname" value="" id="groupname" placeholder="Group Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="description" value="" id="description" placeholder="Description">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="users" class="col-sm-2 control-label">Users</label>
+                        <div class="col-sm-10">
+                    	<input type="text" class="form-control" name="users" id="autocomplete"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default col-md-2">Create Group</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

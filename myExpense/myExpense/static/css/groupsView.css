@@ -1,4 +1,9 @@
-.groups-container{
+.add-group-btn {
+	margin-top: 70px;
+}
+
+.groups-container {
+	padding-top: 10px;
 }
 
 .group-link { 
@@ -12,6 +17,6 @@
 	z-index: 1;
 }   
 
-.item {
+.panel {
 	position:relative;
 }

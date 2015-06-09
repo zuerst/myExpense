@@ -35,6 +35,9 @@ urlpatterns = [
     # Groups
     url(r'^profile/groups/$', 'myExpense.views.groups'),
     url(r'^profile/groups/(?P<id>\d+)/$', 'myExpense.views.groupDetail'),
+
+    # Search(page-(\d+)/)?
+    url(r'^profile/friends/(?P<username>[A-Za-z0-9_-]+)/$', 'myExpense.views.friends'),
     
     # URL for Login and Register User.
     url(r'^accounts/login/$', 'myExpense.views.login'),

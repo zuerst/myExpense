@@ -32,14 +32,14 @@ $.ajaxSetup({
 });
 
 $(document).ready(function() {
-$('#delete').on('shown.bs.modal', function (e) {
-  var transId = $(e.relatedTarget).data('trans-id')
-  var element = document.getElementById('confirmDelete')
-  element.onclick = function () {
-      deleteEntry(transId)
-  }
-  console.log('Delete')
-})
+    $('#delete').on('shown.bs.modal', function (e) {
+        var transId = $(e.relatedTarget).data('trans-id')
+        var element = document.getElementById('confirmDelete')
+        element.onclick = function () {
+            deleteEntry(transId)
+        }
+        console.log('Delete')
+    })
 })
 
 function selectCategory(catName, catColor) {

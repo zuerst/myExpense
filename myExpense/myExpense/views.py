@@ -9,6 +9,7 @@ from forms import RegistrationForm
 from models import *
 
 import datetime
+import json
 
 ############################
 # Main Page
@@ -287,6 +288,19 @@ def groups(request):
     text.update(csrf(request))
 
     return render_to_response('profile/groups/groupsViewTemplate.html', text)
+
+def friends(request, username):
+    if request.method == 'GET':
+        users = User.objects.filter(username__startswith=username)
+        data = []
+        for user in users:
+            data.append(user.username)
+        return HttpResponse(json.dumps(data), content_type="application/json")
+        
+
+    return json.dumps(data)
+
+
 
 ################################################
 # Requets for creating Test Cases

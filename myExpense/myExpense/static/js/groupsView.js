@@ -2,6 +2,39 @@ $(document).ready(function() {
     $('#addGroupPopUp').on('shown.bs.modal', function () {
         $('#groupname').focus()
     })
+
+    $( "#autocomplete" ).autocomplete({
+        source: function( request, response ) {
+        $.ajax({
+            url: '/profile/friends/' + document.getElementById("autocomplete").value,
+            type : 'GET',
+            dataType: "json",
+            success: function(data) {
+                response( $.map( data, function(item) {
+                    return {"label" : item, "value" : item};
+                }));
+            },
+            error: function(data) {
+                $('input.suggest-user').removeClass('ui-autocomplete-loading');  
+            }
+        });
+      },
+
+      minLength: 2,
+
+      open: function() {
+
+      },
+      close: function() {
+
+      },
+      focus:function(event, ui) {
+
+      },
+      select: function(event, ui) {
+
+      }
+    });
 })
 
 function addGroup() {

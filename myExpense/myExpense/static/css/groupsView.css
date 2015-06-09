@@ -24,3 +24,8 @@
 .ui-front {
 	z-index: 1050;
 }
+
+.user-search-label {
+	margin: 5px;
+	display: inline-block;
+}

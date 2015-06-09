@@ -9,31 +9,34 @@ $(document).ready(function() {
             url: '/profile/friends/' + document.getElementById("autocomplete").value,
             type : 'GET',
             dataType: "json",
+
             success: function(data) {
-                response( $.map( data, function(item) {
-                    return {"label" : item, "value" : item};
+                response($.map( data, function(item) {
+                    return {"label" : item.username, "value" : item.username};
                 }));
             },
+
             error: function(data) {
-                $('input.suggest-user').removeClass('ui-autocomplete-loading');  
-            }
-        });
-      },
+            }});
+        },
 
-      minLength: 2,
+        minLength: 2,
 
-      open: function() {
+        open: function() {
 
-      },
-      close: function() {
+        },
+        
+        close: function() {
 
-      },
-      focus:function(event, ui) {
+        },
+        
+        focus:function(event, ui) {
 
-      },
-      select: function(event, ui) {
-
-      }
+        },
+        
+        select: function(event, ui) {
+            $('input#autocomplete').before("<div class=\"label label-primary user-search-label\" id=user-block>" + ui.item.value + "</div>")
+        }
     });
 })
 
@@ -41,19 +44,33 @@ function addGroup() {
     var groupnameValue = document.getElementById("groupname").value;
     var descriptionValue = document.getElementById("description").value; 
 
+    var usersValue = ""
+
+    $('div#user-block').each(function() {
+        usersValue += ($(this ).text());
+        usersValue += ";"
+        console.log(usersValue)
+    });
+
+    dataValues = { method : "add", groupname : groupnameValue, description : descriptionValue};
+    if (usersValue.length > 0){
+        dataValues = { method : "add", groupname : groupnameValue, description : descriptionValue, users : usersValue.slice(0,-1)};
+    }
+
+
     csrfmiddlewaretoken = '{{ csrf_token }}'
 
     $.ajax({
-        url : "/profile/groups/",
+        url : "/profile/groups/create",
         type : "POST",
-        data : { method : "add", groupname : groupnameValue, description : descriptionValue},
+        data : dataValues,
         beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
     },
         success : function(json) {
-            console.log("success");
+            console.log(json);
             location.reload();
         }
     })

@@ -35,6 +35,7 @@ urlpatterns = [
     # Groups
     url(r'^profile/groups/$', 'myExpense.views.groups'),
     url(r'^profile/groups/(?P<id>\d+)/$', 'myExpense.views.groupDetail'),
+    url(r'^profile/groups/create$', 'myExpense.views.create_group'),
 
     # Search(page-(\d+)/)?
     url(r'^profile/friends/(?P<username>[A-Za-z0-9_-]+)/$', 'myExpense.views.friends'),
